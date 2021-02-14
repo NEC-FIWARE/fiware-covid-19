@@ -1,0 +1,2 @@
+#!/bin/sh
+docker run --rm -it -e NGSI_CONV_APIKEY=${NGSI_CONV_APIKEY} --net=host -v $(pwd):/work fiware-covid19/converter "$@"

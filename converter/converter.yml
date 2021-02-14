@@ -1,0 +1,6 @@
+version: "1"
+
+broker:
+  url: "http://localhost:1026/"
+  service: "covid19"
+  path: "/"

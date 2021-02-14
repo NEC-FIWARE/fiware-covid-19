@@ -1,0 +1,2 @@
+#!/bin/sh
+docker run --rm -it --net=host -v $(pwd):/work fiware-covid19/aggregator "$@"

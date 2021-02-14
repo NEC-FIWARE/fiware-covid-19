@@ -1,0 +1,64 @@
+version: "1"
+
+metadata:
+  title: "陽性患者属性"
+  source: "https://"
+  description: ""
+  author: ""
+  license: ""
+  remarks: ""
+
+mapping:
+  attributes:
+    - name: patientNo
+      key: "No"
+
+    - name: municipalityCode
+      default: "01100"
+
+    - name: prefectureName
+      default: "北海道"
+
+    - name: cityName
+      default: "札幌市"
+
+    - name: publishedAt
+      key: "リリース日"
+      format: "%Y-%m-%dT%H:%M:%S.%fZ"
+
+    - name: patientResidence
+      key: "居住地"
+
+    - name: patientAge
+      key: "年代"
+
+    - name: patientGender
+      key: "性別"
+
+    - name: patientOccupation
+      key: "属性"
+
+    - name: patientCondition
+      key: "患者_状態"
+
+    - name: patientDischarged
+      key: "退院"
+
+    - name: remarks
+      key: "備考"
+
+    - name: weeekday
+      key: "曜日"
+      type: "Text"
+
+    - name: supplement
+      key: "補足"
+      type: "Text"
+
+    - name: date
+      key: "date"
+      type: "Text"
+
+    - name: short_date
+      key: "date__1"
+      type: "Text"

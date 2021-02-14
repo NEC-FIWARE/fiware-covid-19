@@ -1,0 +1,17 @@
+"version": "1"
+
+"metadata":
+  title: ""
+  source: ""
+  description: ""
+  author: ""
+  license: ""
+  remarks: ""
+
+"source":
+  "file": "data.csv"
+
+"broker":
+  url: "http://orion"
+  type: "v2"
+  token: 1234

@@ -1,0 +1,40 @@
+version: "1"
+
+metadata:
+  title: "北九州市 新型コロナウイルス感染症 陰性確認数"
+  source: "https://data.bodik.jp/dataset/401005_kitakyushu_covid19_confirm_negative"
+  author: "北九州市"
+  license: "CC-BY"
+
+source:
+  file: "https://ckan.open-governmentdata.org/dataset/550f889f-f758-41e5-83c0-2e631d41af06/resource/888afc2d-61ba-4f62-8494-c8022fcd8548/download/401005_kitakyushu_covid19_confirm_negative.csv"
+  encoding: "Shift_JIS"
+  type: csv
+
+broker:
+  type: "v2"
+  url: "http://localhost:1026/"
+  service: "covid19"
+  path: "/"
+  context: "https://cio-context.fiware-testbed.jp/cio-context.jsonld"
+
+mapping:
+  attributes:
+    - name: confirmedNegativeAt
+      key: "完了_年月日"
+      format: "%Y/%m/%d"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: numberOfNegatives
+      key: "陰性確認_件数"
+
+    - name: remarks
+      default: "--"
