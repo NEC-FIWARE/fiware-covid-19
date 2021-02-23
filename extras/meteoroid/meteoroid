@@ -1,0 +1,2 @@
+#!/bin/sh
+docker run --rm -it -e METEOROID_SCHEMA_ENDPOINT=${METEOROID_SCHEMA_ENDPOINT} --net=host -v $(pwd):/work fiware-covid19/meteoroid-cli:latest "$@"
