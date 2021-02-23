@@ -26,6 +26,7 @@
 import os
 import io
 import sys
+import re
 import argparse
 import json
 import csv
@@ -121,6 +122,17 @@ def get_default_number(value, attr):
     return i
 
 
+def get_number(value):
+    if type(value) is int:
+        return value
+    elif value is None:
+        return 0
+    elif re.match(r'^\d+$', str(value).strip()):
+        return int(str(value).strip())
+    else:
+        return 0
+
+
 def get_flag(value, attr):
     if value == '1':
         flag = 1
@@ -145,7 +157,7 @@ def init_v2():
     }
     entity_types = {'publishedAt': 'Covid19Patients', 'numberOfTestedPeople': 'Covid19TestPeople',
                     'numberOfTests': 'Covid19TestCount', 'numberOfNegatives': 'Covid19ConfirmNegative', 'numberOfCalls': 'Covid19CallCenter'}
-    nubmer_items = ('numberOfTestedPeopl', 'numberOfTests',
+    nubmer_items = ('numberOfTestedPeople', 'numberOfTests',
                     'numberOfNegatives', 'numberOfCalls')
     flag_items = ('patientTravelHistory', 'patientDischarged')
     date_itimes = ('publishedAt', 'symptomOnsetAt', 'testedAt',
@@ -153,7 +165,7 @@ def init_v2():
 
     def add_text(value, attr): return {'type': 'Text', 'value': conv_forbidden_chars(value)}
     def add_text_default(value, attr): return {'type': 'Text', 'value': conv_forbidden_chars(attr['default'])}
-    def add_number(value, attr): return {'type': 'Number', 'value': value}
+    def add_number(value, attr): return {'type': 'Number', 'value': get_number(value)}
     def add_number_default(value, attr): return {'type': 'Number', 'value': attr['default']}
     def add_number_serial(value, attr): return {'type': 'Number', 'value': get_default_number(value, attr)}
     def add_flag(value, attr): return {'type': 'Number', 'value': get_flag(value, attr)}
@@ -182,7 +194,7 @@ def init_ld():
 
     def add_text(value, attr): return {'type': 'Property', 'value': conv_forbidden_chars(value)}
     def add_text_default(value, attr): return {'type': 'Property', 'value': conv_forbidden_chars(attr['default'])}
-    def add_number(value, attr): return {'type': 'Property', 'value': value}
+    def add_number(value, attr): return {'type': 'Property', 'value': get_number(value)}
     def add_number_default(value, attr): return {'type': 'Property', 'value': attr['default']}
     def add_number_serial(value, attr): return {'type': 'Property', 'value': get_default_number(value, attr)}
     def add_flag(value, attr): return {'type': 'Property', 'value': get_flag(value, attr)}
