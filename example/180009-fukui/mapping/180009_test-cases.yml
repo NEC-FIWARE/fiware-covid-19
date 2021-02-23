@@ -1,0 +1,40 @@
+version: "1"
+
+metadata:
+  title: "検査実施件数 - 18000 福井県 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/fukui-ken-product/1/routes/test-cases/get"
+  description: "検査実施件数を取得します。"
+  author: "福井県"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/fukui-ken/test-cases"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: testedAt
+      key: "実施_年月日"
+      format: "%Y/%m/%d"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: numberOfTests
+      key: "検査実施_件数"
+
+    - name: remarks
+      default: "--"

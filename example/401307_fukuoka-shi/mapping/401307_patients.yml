@@ -1,0 +1,64 @@
+version: "1"
+
+metadata:
+  title: "陽性患者属性 - 401307 福岡市 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/fukuoka-shi-product/1/routes/patients/get"
+  description: "福岡市内で確認された新型コロナウイルス感染症陽性患者発表情報のデータを取得します。"
+  author: "福岡市"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/fukuoka-shi/patients"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: patientNo
+      key: "No"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: publishedAt
+      key: "公表_年月日"
+      format: "%Y/%m/%d"
+
+    - name: patientResidence
+      key: "居住地"
+
+    - name: patientAge
+      key: "年代"
+
+    - name: patientGender
+      key: "性別"
+
+    - name: patientOccupation
+      key: "患者_属性"
+
+    - name: patientCondition
+      key: "患者_状態"
+
+    - name: patientSymptoms
+      key: "患者_症状"
+
+    - name: patientTravelHistory
+      key: "患者_渡航歴の有無フラグ"
+
+    - name: patientDischarged
+      key: "退院済フラグ"
+
+    - name: remarks
+      key: "備考"

@@ -1,0 +1,17 @@
+version: "1"
+
+code: "240001"
+
+broker:
+  type: "ld"
+  url: "http://localhost:1026"
+  service: "covid19"
+
+aggregate:
+  - "TestPeopleDaily"
+  - "TestCountDaily"
+  - "ConfirmNegativeDaily"
+  - "CallCenterDaily"
+  - "PatientsDaily"
+  - "PatientsList"
+  - "PatientsSummary"

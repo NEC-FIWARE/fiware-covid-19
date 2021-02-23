@@ -35,5 +35,5 @@ mapping:
     - name: "陰性確認_件数"
       key: "陰性確認_件数"
 
-    - name: remarks
+    - name: "備考"
       default: "--"

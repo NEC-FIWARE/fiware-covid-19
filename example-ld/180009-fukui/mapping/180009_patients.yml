@@ -1,15 +1,17 @@
 version: "1"
 
 metadata:
-  title: "北九州市 新型コロナウイルス感染症 陽性患者属性"
-  source: "https://data.bodik.jp/dataset/401005_kitakyushu_covid19_patients"
-  author: "北九州市"
-  license: "CC-BY"
+  title: "陽性患者属性 - 18000 福井県 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/fukui-ken-product/1/routes/patients/get"
+  description: "陽性患者属性を取得します。"
+  author: "福井県"
+  license: ""
+  remarks: ""
 
 source:
-  file: "https://ckan.open-governmentdata.org/dataset/aad66771-0e86-4d38-b08e-7b74d31f442e/resource/111b9476-bc80-4700-9551-3ba8a4ffcebc/download/401005_kitakyushu_covid19_patients.csv"
-  encoding: "Shift_JIS"
-  type: csv
+  file: "https://api.opendata.go.jp/fukui-ken/patients"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
 
 broker:
   type: "ld"
@@ -21,7 +23,6 @@ mapping:
   attributes:
     - name: "No"
       key: "No"
-      default: 1000
 
     - name: "全国地方公共団体コード"
       key: "全国地方公共団体コード"
@@ -62,8 +63,7 @@ mapping:
       key: "患者_渡航歴の有無フラグ"
 
     - name: "患者_退院済フラグ"
-      key: ""
+      key: "患者_退院済フラグ"
 
     - name: "備考"
       key: "備考"
-      default: "--"
