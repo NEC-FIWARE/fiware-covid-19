@@ -1,7 +1,7 @@
 # FIWARE Covid-19
 
 FIWARE Covid-19 は、自治体等が公開する新型コロナウイルス感染症対策のオープンデータを NGSI v2 形式のデータに変換し、Web サイトに表示するソフトウェアです。
-[変換ツール](./converter/README.md)、[集計ツール](./aggregator/README.md)、[Webサイト](./dokcer/README.md)の３つのソフトウェア部品で構成されており、Docker コンテナで実行できます。
+[変換ツール](./converter/README.md)、[集計ツール](./aggregator/README.md)、[Webサイト](./docker/README.md)の３つのソフトウェア部品で構成されており、Docker コンテナで実行できます。
 
 ![](images/fiware-covid-19-site.png "fiware-covid-19-site")
 
