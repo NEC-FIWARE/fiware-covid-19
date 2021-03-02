@@ -80,7 +80,7 @@ def load_config(file):
                     BROKER_TOKEN = config['broker']['token']
 
                 if 'context' in config['broker']:
-                    BROKER_TOKEN = config['broker']['context']
+                    BROKER_CONTEXT = config['broker']['context']
 
                 CODE = config['code']
                 AGGREGATE = config['aggregate']

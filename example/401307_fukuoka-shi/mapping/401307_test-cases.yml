@@ -1,0 +1,44 @@
+version: "1"
+
+metadata:
+  title: "検査実施件数 - 401307 福岡市 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/fukuoka-shi-product/1/routes/test-cases/get"
+  description: "福岡市内で実施した新型コロナウイルス感染症に係る検査（PCR検査及び抗原検査）の日別の実施数を取得します。"
+  author: "福岡市"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/fukuoka-shi/test-cases"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: testedAt
+      key: "年月日"
+      format: "%Y/%m/%d"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: numberOfTests
+      key: "件数"
+
+    - name: remarks
+      key: "備考"
+
+    - name: weekday
+      key: "曜日"
+      type: "Text"

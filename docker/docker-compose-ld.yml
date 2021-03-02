@@ -30,8 +30,8 @@ services:
     image: mongo:3.6
     command: --nojournal
     volumes:
-      - ./data/ld/db:/data/db
-      - ./data/ld/conf:/data/configdb
+      - ./data-ld/db:/data/db
+      - ./data-ld/conf:/data/configdb
 
   nginx:
     container_name: nginx

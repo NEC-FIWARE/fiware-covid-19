@@ -1,0 +1,64 @@
+version: "1"
+
+metadata:
+  title: "陽性患者属性 - 21000 岐阜県 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/gifu-ken-product/1/routes/patients/get"
+  description: "岐阜県が公開している「新型コロナウイルス陽性患者」の死亡患者属性です。"
+  author: "岐阜県"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/gifu-ken/patients"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: patientNo
+      key: "No"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: publishedAt
+      key: "公表_年月日"
+      format: "%Y-%m-%d"
+
+    - name: patientResidence
+      key: "患者_居住地"
+
+    - name: patientAge
+      key: "患者_年代"
+
+    - name: patientGender
+      key: "患者_性別"
+
+    - name: patientOccupation
+      key: "患者_属性"
+
+    - name: patientCondition
+      key: "患者_状態"
+
+    - name: patientSymptoms
+      key: "患者_症状"
+
+    - name: patientTravelHistory
+      key: "患者_渡航歴の有無フラグ"
+
+    - name: patientDischarged
+      key: "退院済フラグ"
+
+    - name: remarks
+      key: "備考"

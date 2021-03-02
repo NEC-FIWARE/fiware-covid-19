@@ -1,0 +1,62 @@
+version: "1"
+
+metadata:
+  title: "陽性患者属性 - 10000 群馬県 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/gunma-ken-product/1/routes/patients/get"
+  description: "陽性患者属性を取得します。"
+  author: "札幌市"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/gunma-ken/patients"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: patientNo
+      key: "No"
+
+    - name: municipalityCode
+      default: "100005"
+
+    - name: prefectureName
+      default: "群馬県"
+
+    - name: cityName
+      default: ""
+
+    - name: publishedAt
+      key: "判明日"
+      format: "%Y年%m月%d日"
+
+    - name: patientResidence
+      key: "居住地"
+
+    - name: patientAge
+      key: "年代"
+
+    - name: patientGender
+      key: "性別"
+
+    - name: patientOccupation
+      default: "--"
+
+    - name: patientCondition
+      default: "--"
+
+    - name: patientDischarged
+      default: "--"
+
+    - name: remarks
+      default: "--"
+
+    - name: weeekday
+      key: "曜日"
+      type: "Text"

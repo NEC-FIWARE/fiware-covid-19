@@ -1,0 +1,23 @@
+{
+  "type": "Covid19Aggregate",
+  "id": "urn:ngsi-ld:Covid19Aggregate:401005",
+  "version": "1",
+  "code": "401005",
+  "broker":
+    {
+      "type": "v2",
+      "url": "http://localhost:1026",
+      "service": "covid19",
+      "path": "/"
+    },
+  "aggregate":
+    [
+      "TestPeopleDaily",
+      "TestCountDaily",
+      "ConfirmNegativeDaily",
+      "CallCenterDaily",
+      "PatientsDaily",
+      "PatientsList",
+      "PatientsSummary"
+    ]
+}

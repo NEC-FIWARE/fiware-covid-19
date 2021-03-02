@@ -29,8 +29,8 @@ services:
     image: mongo:3.6
     command: --nojournal
     volumes:
-      - ./data/v2/db:/data/db
-      - ./data/v2/conf:/data/configdb
+      - ./data/db:/data/db
+      - ./data/conf:/data/configdb
 
   nginx:
     container_name: nginx

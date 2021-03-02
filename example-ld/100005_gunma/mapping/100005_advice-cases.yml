@@ -1,0 +1,45 @@
+version: "1"
+
+metadata:
+  title: "コールセンター相談件数 - 10000 群馬県 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/gunma-ken-product/1/routes/advice-cases/get"
+  description: "相談件数を取得します。"
+  author: "群馬県"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/gunma-ken/advice-cases"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  type: "ld"
+  url: "http://localhost:1026/"
+  service: "covid19"
+  context: "https://cio-context.fiware-testbed.jp/cio-context.jsonld"
+
+mapping:
+  attributes:
+    - name: "受付_年月日"
+      key: "日付"
+      format: "%Y/%m/%d"
+
+    - name: "全国地方公共団体コード"
+      default: "100005"
+
+    - name: "都道府県名"
+      default: "群馬県"
+
+    - name: "市区町村名"
+      default: ""
+
+    - name: "相談件数"
+      key: "県全体"
+
+    - name: "備考"
+      default: "--"
+
+    - name: weeekday
+      key: "曜日"
+      type: "Text"

@@ -1,0 +1,44 @@
+version: "1"
+
+metadata:
+  title: "コールセンター相談件数 - 401307 福岡市 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/fukuoka-shi-product/1/routes/contact-dial-cases/get"
+  description: "新型コロナウイルス感染症に関して、福岡市の新型コロナウイルス感染症相談ダイヤルで受け付けた日別の相談件数を取得します"
+  author: "福岡市"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/fukuoka-shi/contact-dial-cases"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: acceptedAt
+      key: "年月日"
+      format: "%Y/%m/%d"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: numberOfCalls
+      key: "件数"
+
+    - name: remarks
+      default: "--"
+
+    - name: weekday
+      key: "曜日"
+      type: "Text"

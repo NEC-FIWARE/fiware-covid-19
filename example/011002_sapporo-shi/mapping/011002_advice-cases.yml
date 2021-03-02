@@ -1,0 +1,68 @@
+version: "1"
+
+metadata:
+  title: "コールセンター相談件数 - 011002 札幌市 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/sapporo-shi-product/1/routes/advice-cases/get"
+  description: "札幌市新型コロナウイルス一般電話相談窓口の相談件数を取得します。"
+  author: "札幌市"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/sapporo-shi/advice-cases"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: acceptedAt
+      key: "日付"
+      format: "%Y-%m-%dT%H:%M:%S.%fZ"
+
+    - name: municipalityCode
+      default: "011002"
+
+    - name: prefectureName
+      default: "北海道"
+
+    - name: cityName
+      default: "札幌市"
+
+    - name: numberOfCalls
+      key: "小計"
+
+    - name: remarks
+      default: "--"
+
+    - name: weeekday
+      key: "曜日"
+      type: "Text"
+
+    - name: 9_13
+      key: "9-13時"
+      type: "Text"
+
+    - name: 13_17
+      key: "13-17時"
+      type: "Text"
+
+    - name: 17_21
+      key: "17-21時"
+      type: "Text"
+
+    - name: date
+      key: "date"
+      type: "Text"
+
+    - name: w
+      key: "w"
+      type: "Text"
+
+    - name: short_date
+      key: "short_date"
+      type: "Text"

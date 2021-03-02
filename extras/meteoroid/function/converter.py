@@ -30,7 +30,6 @@ import re
 import argparse
 import json
 import csv
-import yaml
 import urllib.request
 import urllib.parse
 from datetime import datetime
@@ -59,8 +58,7 @@ def create_ngsi_entities(config, entities):
     broker = config['broker']
     v2 = broker['type'] == 'v2'
 
-    url = urllib.parse.urljoin(
-        broker['url'], '/v2/op/update' if v2 else '/ngsi-ld/v1/entityOperations/upsert')
+    url = urllib.parse.urljoin(broker['url'], '/v2/op/update' if v2 else '/ngsi-ld/v1/entityOperations/upsert')
     req = urllib.request.Request(url)
     req.add_header('Content-Type', 'application/json; charset=utf-8')
     if 'service' in broker:
@@ -109,6 +107,38 @@ def create_ngsi_entities(config, entities):
     return True
 
 
+def get_mapping_def(param):
+    url = urllib.parse.urljoin(param['broker']['url'], '/v2/entities')
+    q = {'idPattern': 'urn:ngsi-ld:Covid19Mapping:' + param['code'] + ':.*', 'options': 'keyValues'}
+    url = url + '?' + urllib.parse.urlencode(q)
+
+    req = urllib.request.Request(url)
+    req.add_header('Fiware-Service', param['broker']['service'])
+    req.add_header('Fiware-ServicePath', param['broker']['path'])
+
+    try:
+        res = urllib.request.urlopen(req)
+        body = res.read()
+        j = json.loads(body.decode('utf-8'))
+
+    except urllib.error.HTTPError as err:
+        print(err.code)
+        print(err.reason)
+        return None
+    except urllib.error.URLError as err:
+        print(err.reason)
+        return None
+    else:
+        if res.status != 200:
+            print(res.status)
+            print(res.read().decode('utf-8'))
+            res.close()
+            return None
+        res.close()
+
+    return j
+
+
 trans_table = str.maketrans({'<': '＜', '>': '＞', '"': '”', '\'': '’', '=': '＝', ';': '；', '(': '（', ')': '）'})
 
 
@@ -121,17 +151,15 @@ def get_default_number(value, attr):
     attr['serial'] = i + 1
     return i
 
-
 def get_number(value):
     if type(value) is int:
-        return value
+	         return value
     elif value is None:
         return 0
     elif re.match(r'^\d+$', str(value).strip()):
         return int(str(value).strip())
     else:
         return 0
-
 
 def get_flag(value, attr):
     if value == '1':
@@ -451,17 +479,7 @@ def yaml_load(args):
         print('mapping file not found')
         return None
 
-    with open(args.map, 'r') as yml:
-        config = yaml.load(yml, Loader=yaml.SafeLoader)
-
-    if 'broker' not in config:
-        if os.path.exists('./config.yml'):
-            with open('./config.yml', 'r') as yml:
-                conv = yaml.load(yml)
-                if 'broker' in conv:
-                    config['broker'] = {}
-                    for k in conv['broker']:
-                        config['broker'][k] = conv['broker'][k]
+    config = {}
 
     if 'source' not in config:
         config['source'] = {}
@@ -679,19 +697,73 @@ def check_config(config):
         return config
 
 
-def main():
-    config = yaml_load(get_options())
-    if config is None:
-        sys.exit(1)
+def config_over_write(config, params):
+    if 'broker' not in config:
+        config['broker'] = {}
 
-    if config['source']['type'] == 'json':
-        r = conv_json(config)
+    if 'broker' in params:
+        for key in params['broker']:
+            config['broker'][key] = params['broker'][key]
+
+    return config
+
+
+def invoke_aggregator(params):
+    url = urllib.parse.urljoin(params['broker']['url'], '/v2/entities/urn:ngsi-ld:Covid19Aggregate:' + params['code'] + '/attrs')
+    url = url + '?' + urllib.parse.urlencode({'options': 'keyValues'})
+
+    req = urllib.request.Request(url)
+    req.add_header('Fiware-Service', params['broker']['service'])
+    req.add_header('Fiware-ServicePath', params['broker']['path'])
+    req.add_header('Content-Type', 'application/json')
+
+    body = {}
+    body['code'] = params['code']
+    body['modifiedAt'] = datetime.now().isoformat()
+    body['params'] = params['broker']
+
+    body = json.dumps(body, ensure_ascii=False).encode()
+
+    try:
+        res = urllib.request.urlopen(req, body)
+
+    except urllib.error.HTTPError as err:
+        print(err.code)
+        print(err.reason)
+        return False
+    except urllib.error.URLError as err:
+        print(err.reason)
+        return False
     else:
-        r = conv_csv(config)
+        if res.status != 204:
+            print(res.status)
+            print(res.read().decode('utf-8'))
+            res.close()
+            return False
+        res.close()
 
+    return True
+
+
+def main(params):
+    configs = get_mapping_def(params)
+
+    entities = []
+    for config in configs:
+        config = config_over_write(config, params)
+        config = check_config(config)
+        if config is None:
+            return {'status': 'config error:' + config['id'], 'entities': entities}
+        if config['source']['type'] == 'json':
+            r = conv_json(config)
+        else:
+            r = conv_csv(config)
+        if not r:
+            return {'status': 'convert error:' + config['id'], 'entities': entities}
+        entities.append(config['id'])
+
+    r = invoke_aggregator(params)
     if not r:
-        sys.exit(1)
+        return {'status': 'invoke error', 'entities': entities}
 
-
-if __name__ == '__main__':
-    main()
+    return {'status': 'ok', 'entities': entities}

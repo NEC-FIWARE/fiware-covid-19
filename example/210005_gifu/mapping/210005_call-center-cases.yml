@@ -1,0 +1,40 @@
+version: "1"
+
+metadata:
+  title: "コールセンター相談件数 - 21000 岐阜県 新型コロナ関連オープンデータAPI"
+  source: "https://portal.opendata.go.jp/docs/gifu-ken-product/1/routes/call-center-cases/get"
+  description: "岐阜県が公開している「新型コロナウイルス健康相談窓口相談件数」です。"
+  author: "岐阜県"
+  license: ""
+  remarks: ""
+
+source:
+  file: "https://api.opendata.go.jp/gifu-ken/call-center-cases"
+  type: "json"
+  apikey: "NGSI_CONV_APIKEY"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+    - name: acceptedAt
+      key: "受付_年月日"
+      format: "%Y-%m-%d"
+
+    - name: municipalityCode
+      key: "全国地方公共団体コード"
+
+    - name: prefectureName
+      key: "都道府県名"
+
+    - name: cityName
+      key: "市区町村名"
+
+    - name: numberOfCalls
+      key: "相談件数"
+
+    - name: remarks
+      default: "--"
