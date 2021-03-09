@@ -140,6 +140,7 @@ def get_mapping_def(param):
 
 
 trans_table = str.maketrans({'<': '＜', '>': '＞', '"': '”', '\'': '’', '=': '＝', ';': '；', '(': '（', ')': '）'})
+trans_num_table = str.maketrans({'０': '0', '１': '1', '２': '2', '３': '3', '４': '4', '５': '5', '６': '6', '７': '7', '８': '8', '９': '9'})
 
 
 def conv_forbidden_chars(s):
@@ -151,15 +152,17 @@ def get_default_number(value, attr):
     attr['serial'] = i + 1
     return i
 
+
 def get_number(value):
     if type(value) is int:
-	         return value
+        return value
     elif value is None:
         return 0
     elif re.match(r'^\d+$', str(value).strip()):
         return int(str(value).strip())
     else:
         return 0
+
 
 def get_flag(value, attr):
     if value == '1':
@@ -197,7 +200,7 @@ def init_v2():
     def add_number_default(value, attr): return {'type': 'Number', 'value': attr['default']}
     def add_number_serial(value, attr): return {'type': 'Number', 'value': get_default_number(value, attr)}
     def add_flag(value, attr): return {'type': 'Number', 'value': get_flag(value, attr)}
-    def add_date(value, attr): return None if value == '' else {'type': 'DateTime', 'value': datetime.strptime(value, attr['format']).isoformat()}
+    def add_date(value, attr): return None if value == '' else {'type': 'DateTime', 'value': datetime.strptime(value.translate(trans_num_table), attr['format']).isoformat()}
 
     municipality_code = 'municipalityCode'
 
@@ -226,7 +229,7 @@ def init_ld():
     def add_number_default(value, attr): return {'type': 'Property', 'value': attr['default']}
     def add_number_serial(value, attr): return {'type': 'Property', 'value': get_default_number(value, attr)}
     def add_flag(value, attr): return {'type': 'Property', 'value': get_flag(value, attr)}
-    def add_date(value, attr): return None if value == '' else {'type': 'Property', 'value': datetime.strptime(value, attr['format']).isoformat()}
+    def add_date(value, attr): return None if value == '' else {'type': 'Property', 'value': datetime.strptime(value.translate(trans_num_table), attr['format']).isoformat()}
 
     municipality_code = '全国地方公共団体コード'
 
