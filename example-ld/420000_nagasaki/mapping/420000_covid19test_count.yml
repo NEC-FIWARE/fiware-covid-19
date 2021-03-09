@@ -1,0 +1,50 @@
+version: "1"
+
+metadata:
+  title: "長崎県新型コロナウイルス感染症検査実施数"
+  source: "https://data.bodik.jp/dataset/420000_covidexam"
+  description: "長崎県内の新型コロナウイルスPCR検査実施件数の一覧です。クルーズ船の情報を含んでおります。"
+  author: "長崎県"
+  license: "クリエイティブ・コモンズ 表示 4.0 国際"
+  remarks: ""
+
+source:
+  file: "https://data.bodik.jp/dataset/0af544cf-0c40-46ee-9db2-edaa65801714/resource/71e83845-2648-4cb3-a69d-9f5f5412feb2/download/20210301_pref_nagasaki_covid_exam.csv"
+  type: "csv"
+
+broker:
+  url: "http://localhost:1026"
+  service: "covid19"
+  path: "/"
+
+mapping:
+  attributes:
+
+    - name: "No"
+      key: "No"
+
+    - name: "実施_年月日"
+      key: "年月日"
+      format: "%Y-%m-%d"
+
+    - name: "全国地方公共団体コード"
+      key: "全国地方公共団体コード"
+
+    - name: "都道府県名"
+      key: "都道府県名"
+
+    - name: "市区町村名"
+      default : "市区町村名"
+
+    - name: "検査実施_件数"
+      key: "件数"
+
+    - name: "備考"
+      key: "備考"
+
+    - name: "件数_その他"
+      key: "件数_その他"
+
+    - name: "曜日"
+      key: "曜日"
+      type: "Text"
