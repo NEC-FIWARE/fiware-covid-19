@@ -110,6 +110,7 @@ def create_ngsi_entities(config, entities):
 
 
 trans_table = str.maketrans({'<': '＜', '>': '＞', '"': '”', '\'': '’', '=': '＝', ';': '；', '(': '（', ')': '）'})
+trans_num_table = str.maketrans({'０': '0', '１': '1', '２': '2', '３': '3', '４': '4', '５': '5', '６': '6', '７': '7', '８': '8', '９': '9'})
 
 
 def conv_forbidden_chars(s):
@@ -169,7 +170,7 @@ def init_v2():
     def add_number_default(value, attr): return {'type': 'Number', 'value': attr['default']}
     def add_number_serial(value, attr): return {'type': 'Number', 'value': get_default_number(value, attr)}
     def add_flag(value, attr): return {'type': 'Number', 'value': get_flag(value, attr)}
-    def add_date(value, attr): return None if value == '' else {'type': 'DateTime', 'value': datetime.strptime(value, attr['format']).isoformat()}
+    def add_date(value, attr): return None if value == '' else {'type': 'DateTime', 'value': datetime.strptime(value.translate(trans_num_table), attr['format']).isoformat()}
 
     municipality_code = 'municipalityCode'
 
@@ -198,7 +199,7 @@ def init_ld():
     def add_number_default(value, attr): return {'type': 'Property', 'value': attr['default']}
     def add_number_serial(value, attr): return {'type': 'Property', 'value': get_default_number(value, attr)}
     def add_flag(value, attr): return {'type': 'Property', 'value': get_flag(value, attr)}
-    def add_date(value, attr): return None if value == '' else {'type': 'Property', 'value': datetime.strptime(value, attr['format']).isoformat()}
+    def add_date(value, attr): return None if value == '' else {'type': 'Property', 'value': datetime.strptime(value.translate(trans_num_table), attr['format']).isoformat()}
 
     municipality_code = '全国地方公共団体コード'
 
