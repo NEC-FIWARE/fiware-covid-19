@@ -80,15 +80,21 @@ class Broker():
         headers = {
             'Accept': 'application/json',
         }
-        if self.broker_service:
-            headers['Fiware-Service'] = self.broker_service
-        if self.broker_path:
-            headers['Fiware-ServicePath'] = self.broker_path
-        if self.broker_token:
-            headers['Authorization'] = 'Bearer: {}'.format(self.broker_token)
-        if self.broker_version == 'ld':
+        if self.broker_version == 'v2':
+            if self.broker_service:
+                headers['Fiware-Service'] = self.broker_service
+            if self.broker_path:
+                headers['Fiware-ServicePath'] = self.broker_path
+        elif self.broker_version == 'ld':
+            if self.broker_service:
+                headers['NGSILD-Tenant'] = self.broker_service
             headers['Link'] = BROKER[self.broker_version]['link'].format(
                 self.broker_context)
+        else:
+            raise ValueError('invalid ngsi version.')
+
+        if self.broker_token:
+            headers['Authorization'] = 'Bearer: {}'.format(self.broker_token)
 
         params = {
             'options': 'keyValues',
@@ -125,15 +131,21 @@ class Broker():
         headers = {
             'Accept': 'application/json',
         }
-        if self.broker_service:
-            headers['Fiware-Service'] = self.broker_service
-        if self.broker_path:
-            headers['Fiware-ServicePath'] = self.broker_path
-        if self.broker_token:
-            headers['Authorization'] = 'Bearer: {}'.format(self.broker_token)
-        if self.broker_version == 'ld':
+        if self.broker_version == 'v2':
+            if self.broker_service:
+                headers['Fiware-Service'] = self.broker_service
+            if self.broker_path:
+                headers['Fiware-ServicePath'] = self.broker_path
+        elif self.broker_version == 'ld':
+            if self.broker_service:
+                headers['NGSILD-Tenant'] = self.broker_service
             headers['Link'] = BROKER[self.broker_version]['link'].format(
                 self.broker_context)
+        else:
+            raise ValueError('invalid ngsi version.')
+
+        if self.broker_token:
+            headers['Authorization'] = 'Bearer: {}'.format(self.broker_token)
 
         params = {
             'type': entity_type,
@@ -188,15 +200,21 @@ class Broker():
         headers = {
             'Content-Type': 'application/json; charset=UTF-8',
         }
-        if self.broker_service:
-            headers['Fiware-Service'] = self.broker_service
-        if self.broker_path:
-            headers['Fiware-ServicePath'] = self.broker_path
-        if self.broker_token:
-            headers['Authorization'] = 'Bearer: {}'.format(self.broker_token)
-        if self.broker_version == 'ld':
+        if self.broker_version == 'v2':
+            if self.broker_service:
+                headers['Fiware-Service'] = self.broker_service
+            if self.broker_path:
+                headers['Fiware-ServicePath'] = self.broker_path
+        elif self.broker_version == 'ld':
+            if self.broker_service:
+                headers['NGSILD-Tenant'] = self.broker_service
             headers['Link'] = BROKER[self.broker_version]['link'].format(
                 self.broker_context)
+        else:
+            raise ValueError('invalid ngsi version.')
+
+        if self.broker_token:
+            headers['Authorization'] = 'Bearer: {}'.format(self.broker_token)
 
         if self.broker_version == 'v2':
             payload = {
